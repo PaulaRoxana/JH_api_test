@@ -5,8 +5,13 @@ import org.example.service.uritemplate.UriTemplate;
 
 public class UserService extends CommonService {
 
+    private UserService() {
+    }
+
+    ;//default constructor
     private static UserService instance;
 
+    //singleton; saves, creates
     public static UserService getInstance() {
         if (instance == null) {
             instance = new UserService();

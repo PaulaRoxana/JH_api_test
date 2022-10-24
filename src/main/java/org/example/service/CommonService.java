@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
+import org.example.log.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +31,15 @@ public abstract class CommonService {
     }
 
     protected Response getRequest(String uri) {
-        return requestSpecification.expect().statusCode(HttpStatus.SC_OK).log().ifError()
+        Log.info("Sending the get request to the Uri" + prepareUri.apply(uri));
+        Response response =  requestSpecification.expect().statusCode(HttpStatus.SC_OK).log().ifError()
                 .when().get(prepareUri.apply(uri));
+        Log.info("Response body is " + response.asPrettyString());
+        return response;
     }
 
     protected Response postRequest(String uri, Object body) {
+        Log.info("Sending the get request to the Uri" + prepareUri.apply(uri));
         return requestSpecification.body(body).expect().statusCode(HttpStatus.SC_CREATED).log().ifError()
                 .when().post(prepareUri.apply(uri));
     }
