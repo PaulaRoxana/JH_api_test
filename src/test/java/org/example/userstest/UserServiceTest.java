@@ -26,21 +26,21 @@ public class UserServiceTest {
 
     @Test
     public void createUsersTest() {
-        User expectedUser = createUser();
+        User expectedUser = createUserBody();
         User createdUser = UserServiceSteps.createUser(expectedUser);
         Assert.assertEquals(createdUser.getName(), expectedUser.getName(), "Expected user doesn't have correct name");
     }
 
     @Test
     public void deleteUsersTest() {
-        User createdUser = UserServiceSteps.createUser(createUser());
+        User createdUser = UserServiceSteps.createUser(createUserBody());
 
         UserServiceSteps.deleteUserById(createdUser.getId());
         List<User> users = UserServiceSteps.getAllUsers();
         Assert.assertFalse(users.contains(createdUser), "Expected users list doesn't contain deleted element");
     }
 
-    private User createUser() {
+    private User createUserBody() {
         Random random = new Random();
         return new User()
                 .setName("test" + random.nextInt())
